@@ -11,9 +11,9 @@ JCKawin , JosephDaniel , SV Sanju , SriramBahrath  , JaiSuriyaa (paperbucket)
 
 In order to run this game : 
 
-Step 1 : Create a new virtual environment for python
-Step 2 : Install the dependencies from requirements.txt through this command <code> pip install -r requirements.txt </code>
-Step 2 : run the <code> mainfile.py </code> using the same python environment where you had instaled those libraries
+* Step 1 : Create a new virtual environment for python
+* Step 2 : Install the dependencies from requirements.txt through this command <code>pip install -r requiments.txt</code>
+* Step 3 : run the <code>mainfile.py</code> using the same python environment where you had installed those libraries
 
 
 
