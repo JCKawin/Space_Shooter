@@ -3,6 +3,8 @@ import settings as Set
 
 class main:
     def __init__(self):
+        pygame.init()
+        pygame.display.init
         self.screen = pygame.display.set_mode(Set.SCREEN_SIZE)
         self.clock = pygame.time.Clock()
         self.running = True
