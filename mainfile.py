@@ -9,6 +9,9 @@ class main:
 
     def gameloop(self):
         while self.running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.running = False
             self.dt = self.clock.tick()
             self.screen.fill(Set.BG_COLOR)
             pygame.display.flip()
