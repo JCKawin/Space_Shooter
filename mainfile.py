@@ -10,9 +10,20 @@ class main:
 
     def gameloop(self):
         while self.running:
+            self._update_events()
             self.dt = self.clock.tick()
             self.screen.fill(Set.BG_COLOR)
             pygame.display.flip()
+
+    def _update_events(self):
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                self.running = False
+
+        self.key_pressed = pygame.key.get_pressed()
+
+
+               
 
 
 
