@@ -1,11 +1,13 @@
 import pygame
 import settings as Set
+import ship
 
 class main:
     def __init__(self):
         self.screen = pygame.display.set_mode(Set.SCREEN_SIZE)
         self.clock = pygame.time.Clock()
         self.running = True
+        self.ship = 
 
 
     def gameloop(self):
@@ -20,7 +22,10 @@ class main:
             if e.type == pygame.QUIT:
                 self.running = False
 
-        self.key_pressed = pygame.key.get_pressed()
+            self.key_pressed = pygame.key.get_pressed()
+
+
+    
 
 
                
