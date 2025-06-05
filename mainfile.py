@@ -15,6 +15,7 @@ class main:
             self._update_events()
             self.dt = self.clock.tick(60)
             self.screen.fill(Set.BG_COLOR)
+            self.ship.update(self.dt)
             self.screen.blit(self.ship.image , self.ship.rect)
             pygame.display.flip()
 
@@ -22,11 +23,11 @@ class main:
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
                 self.running = False
-
-           
-            self.ship.update()
-
-
+            if e.type == pygame.KEYDOWN:
+                self.ship.ismoving = True
+            if e.type == pygame.KEYUP:
+                self.ship.ismoving = False
+            
     
 
 
