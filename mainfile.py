@@ -7,14 +7,15 @@ class main:
         self.screen = pygame.display.set_mode(Set.SCREEN_SIZE)
         self.clock = pygame.time.Clock()
         self.running = True
-        self.ship = 
-
-
+        self.ship = ship.ship()
+        self.dt = 0
+        
     def gameloop(self):
         while self.running:
             self._update_events()
-            self.dt = self.clock.tick()
+            self.dt = self.clock.tick(60)
             self.screen.fill(Set.BG_COLOR)
+            self.screen.blit(self.ship.image , self.ship.rect)
             pygame.display.flip()
 
     def _update_events(self):
@@ -22,7 +23,8 @@ class main:
             if e.type == pygame.QUIT:
                 self.running = False
 
-            self.key_pressed = pygame.key.get_pressed()
+           
+            self.ship.update()
 
 
     
