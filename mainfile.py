@@ -4,12 +4,16 @@ import ship
 
 class main:
     def __init__(self):
-        self.screen = pygame.display.set_mode(Set.SCREEN_SIZE)
+        pygame.init()
+        pygame.display.init()
+        pygame.font.init()
+        self.screen = pygame.display.set_mode(Set.SCREEN_SIZE , pygame.RESIZABLE)
         self.clock = pygame.time.Clock()
+        self.Background = pygame.image.load("images\\proto#background.bmp")
         
         self.running = True
         
-        self.ship = ship.ship()
+        self.ship = ship.ship(self)
         self.dt = 0
         
     def gameloop(self):
@@ -18,15 +22,16 @@ class main:
                 if event.type == pygame.QUIT:
                     self.running = False
             self.dt = self.clock.tick()
-            self.screen.fill(Set.BG_COLOR)
+            self.screen.blit(self.Background , (0,0))
             self.screen.blit(self.ship.image , self.ship.rect)
             pygame.display.flip()
             self.ship.update(self.dt)        
 
     def _draw_fps(self):
-        fps = self.font.render(self.clock.get_fps(),True ,(0,0,0))
+        fps = self.f_uwl.render(self.clock.get_fps(),True ,(0,0,0))
         fps_rect = fps.get_frect()
         fps_rect.topleft = (0,0)
+        self.screen.blit(fps , fps_rect)
 
 
         
