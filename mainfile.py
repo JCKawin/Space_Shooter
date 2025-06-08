@@ -27,11 +27,7 @@ class main:
             pygame.display.flip()
             self.ship.update(self.dt)        
 
-    def _draw_fps(self):
-        fps = self.f_uwl.render(self.clock.get_fps(),True ,(0,0,0))
-        fps_rect = fps.get_frect()
-        fps_rect.topleft = (0,0)
-        self.screen.blit(fps , fps_rect)
+    
 
 
         
