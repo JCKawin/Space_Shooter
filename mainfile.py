@@ -3,16 +3,18 @@ import pygame
 import settings as Set
 import ship
 import astroid
+import bullet
 
 class main:
     def __init__(self):
         pygame.init()
         pygame.display.init()
         pygame.font.init()
-        self.screen = pygame.display.set_mode(Set.SCREEN_SIZE , pygame.RESIZABLE)
+        self.screen = pygame.display.set_mode(Set.SCREEN_SIZE)
         self.clock = pygame.time.Clock()
-        self.Background = pygame.image.load("images\\proto#background.bmp")
-        self.Rock = pygame.sprite.Group()        
+        self.background = pygame.image.load("images\\proto#background.bmp")
+        self.rock = pygame.sprite.Group()  
+        self.bullet = pygame.sprite.Group()     
         self.running = True
         
         self.ship = ship.ship(self)
@@ -28,14 +30,19 @@ class main:
                 if event.type == pygame.QUIT:
                     self.running = False
                 if event.type == put_astroid:
-                    astroid.Rock(self.Rock , rock_point)
+                    astroid.Rock(self.rock , rock_point)
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_j:
+                        bullet.bullet(self.bullet , self.ship.rect.midtop )
             self.dt = self.clock.tick()
-            self.screen.blit(self.Background , (0,0))
+            self.screen.blit(self.background , (0,0))
             self.screen.blit(self.ship.image , self.ship.rect)
-            self.Rock.draw(self.screen)
+            self.rock.draw(self.screen)
+            self.bullet.draw(self.screen)
             pygame.display.flip()
-            self.Rock.update(self.dt)       
-            self.ship.update(self.dt)        
+            self.rock.update(self.dt)       
+            self.ship.update(self.dt) 
+            self.bullet.update(self.dt)       
 
     
 
