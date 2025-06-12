@@ -42,7 +42,13 @@ class main:
             pygame.display.flip()
             self.rock.update(self.dt)       
             self.ship.update(self.dt) 
-            self.bullet.update(self.dt)       
+            self.bullet.update(self.dt)
+            self._damage()       
+
+    def _damage(self):
+        if pygame.sprite.spritecollide(self.ship , self.rock , True):
+            self.ship.Hp -= 1
+            print(self.ship.Hp)
 
     
 

@@ -11,6 +11,7 @@ class ship():
         self.rect = self.image.get_frect(center = (Set.SCREEN_SIZE[0]/2 , Set.SCREEN_SIZE[1]/2))
         self.direction = pygame.Vector2(0,0)
         self.ismoving = False
+        self.Hp = 100
 
     def update(self , dt):
         keypressed = pygame.key.get_pressed()
