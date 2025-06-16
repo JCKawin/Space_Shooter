@@ -13,7 +13,7 @@ class Rock(pygame.sprite.Sprite):
         self.direction = self.direction.normalize() if self.direction else self.direction
 
     def update(self , dt) -> None:
-        self.rect.center += self.direction * dt # type: ignore
+        self.rect.center += self.direction *  Set.ASTROID_SPEED * dt # type: ignore
         if self.rect.bottom > Set.SCREEN_SIZE[1]: #type: ignore
             self.kill()
         

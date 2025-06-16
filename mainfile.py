@@ -17,14 +17,14 @@ class main:
         self.bullet = pygame.sprite.Group()     
         self.running = True
         self.score = 0 
-        self.f_uwl = pygame.font.Font("fonts\\UnwaveLover-PV9AZ.otf" , 25)
+        self.f_uwl = pygame.font.Font("fonts\\VT323-Regular.ttf" , 30)
         self.f_pkl = pygame.font.Font(None, 30)       
         self.ship = ship.ship(self)
         self.dt = 0
         
     def gameloop(self):
         put_astroid = pygame.event.custom_type()
-        pygame.time.set_timer(put_astroid , 1000)
+        pygame.time.set_timer(put_astroid , 10)
         
         while self.running:
             rock_point = random.randint(0 , Set.SCREEN_SIZE[0]) , random.randint(0 , 20) 
@@ -42,12 +42,15 @@ class main:
             self.screen.blit(self.ship.image , self.ship.rect)
             self.rock.draw(self.screen)
             self.bullet.draw(self.screen)
-            self._healthbar()      
+            self._UI()      
             pygame.display.flip()
             self.rock.update(self.dt)       
             self.ship.update(self.dt) 
             self.bullet.update(self.dt)
-            self._damage() 
+            self._damage()
+
+        else:
+            pass 
 
     def _damage(self):
         if pygame.sprite.spritecollide(self.ship , self.rock , True):
@@ -55,23 +58,30 @@ class main:
             
         if pygame.sprite.groupcollide(self.bullet , self.rock , True , True):
             self.score += 1
-            print(self.score)
 
-    def _healthbar(self):
+        if self.ship.Hp == 0:
+            self.running = False
+
+
+
+    def _UI(self):
         healthbar = pygame.rect.Rect(30 , Set.SCREEN_SIZE[1] - 50 , self.ship.Hp * 4 , 20 )
         pygame.draw.rect(self.screen , 'white' , healthbar)
-        text = self.f_uwl.render("health" , True , 'black')
-        text_rect = text.get_rect()
-        text_rect.topleft = (34 , Set.SCREEN_SIZE[1] - 55)
-        self.screen.blit(text , text_rect)
-        fps = self.f_pkl.render(f"FPS: {round(self.clock.get_fps() , 0)}" , True , 'white')
-        fps_rect = fps.get_rect()
-        fps_rect.topleft = (30 , 30)
-        self.screen.blit(fps , fps_rect)
-        score = self.f_pkl.render(f"Score : {self.score}" , True , 'white')
-        score_rect = score.get_rect()
-        score_rect.topright = (Set.SCREEN_SIZE[0] - 50 , 20 )
-        self.screen.blit(score , score_rect)
+        self.printf(self.screen , f"health {self.ship.Hp}" ,  (34 , Set.SCREEN_SIZE[1] - 55) , 'black' , self.f_uwl )
+        self.printf(self.screen , f"FPS: {round(self.clock.get_fps() , 0 )}" , (30 , 30) , 'white' , self.f_pkl )
+        self.printf(self.screen , f"Score : {self.score}" ,  (Set.SCREEN_SIZE[0] - 120  , 20 ) , 'white' , self.f_pkl)
+
+    def gameover(self):
+        pass
+    
+    @staticmethod
+    def printf(screen , text , rect , colour , font ):
+        tex = font.render(text , True , colour)
+        tex_rect = tex.get_rect()
+        tex_rect.topleft = rect
+        screen.blit(tex , tex_rect)
+        
+
 
         
 

@@ -1,4 +1,3 @@
-
 import pygame
 import settings as Set
 
