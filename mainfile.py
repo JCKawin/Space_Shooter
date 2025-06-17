@@ -1,4 +1,5 @@
 import random
+import time
 import pygame
 import settings as Set
 import ship
@@ -21,10 +22,12 @@ class main:
         self.f_pkl = pygame.font.Font(None, 30)       
         self.ship = ship.ship(self)
         self.dt = 0
+        self.health_bar_colour = 'white'
+        self.start_colour = time.time()
         
     def gameloop(self):
         put_astroid = pygame.event.custom_type()
-        pygame.time.set_timer(put_astroid , 10)
+        pygame.time.set_timer(put_astroid , 500)
         
         while self.running:
             rock_point = random.randint(0 , Set.SCREEN_SIZE[0]) , random.randint(0 , 20) 
@@ -36,6 +39,9 @@ class main:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_j:
                         bullet.bullet(self.bullet , self.ship.rect.midtop )
+
+                    if event.key == pygame.K_l:
+                        self._heal()
             
             self.dt = self.clock.tick()
             self.screen.blit(self.background , (0,0))
@@ -50,23 +56,35 @@ class main:
             self._damage()
 
         else:
-            pass 
+            self.gameover()
 
     def _damage(self):
         if pygame.sprite.spritecollide(self.ship , self.rock , True):
             self.ship.Hp -= 1
-            
+            self.health_bar_colour = 'red'
+            self.start_colour = time.time()
+    
         if pygame.sprite.groupcollide(self.bullet , self.rock , True , True):
             self.score += 1
 
         if self.ship.Hp == 0:
             self.running = False
 
+        if round(time.time() - self.start_colour , 1) == 0.3 : 
+            self.health_bar_colour = 'white'
+
+    def _heal(self):
+        if self.score >= 10 and self.ship.Hp < 90:
+            self.score -= 10
+            self.ship.Hp += 10
+            self.health_bar_colour = 'blue'
+            self.start_colour = time.time()
+
 
 
     def _UI(self):
         healthbar = pygame.rect.Rect(30 , Set.SCREEN_SIZE[1] - 50 , self.ship.Hp * 4 , 20 )
-        pygame.draw.rect(self.screen , 'white' , healthbar)
+        pygame.draw.rect(self.screen , self.health_bar_colour , healthbar)
         self.printf(self.screen , f"health {self.ship.Hp}" ,  (34 , Set.SCREEN_SIZE[1] - 55) , 'black' , self.f_uwl )
         self.printf(self.screen , f"FPS: {round(self.clock.get_fps() , 0 )}" , (30 , 30) , 'white' , self.f_pkl )
         self.printf(self.screen , f"Score : {self.score}" ,  (Set.SCREEN_SIZE[0] - 120  , 20 ) , 'white' , self.f_pkl)
