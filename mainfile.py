@@ -32,7 +32,9 @@ class main:
         self.rock_img = pygame.image.load("images\\proto#astroid.png").convert_alpha()
         self.rock_img = pygame.transform.scale(self.rock_img , (64,64))
         self.bgm = pygame.mixer.music.load("audio\\Project_Space Shooter_Final.mp3")
-        pygame.mixer.music.set_volume(1)
+        pygame.mixer.music.set_volume(0.7)
+        self.shoot_eff=pygame.mixer.Sound("audio\\Space Shooter_Fire.mp3")
+        self.rock_exp_eff=pygame.mixer.Sound("audio\\Space Shooter_Explosion.mp3")
 
         
     def gameloop(self):
@@ -50,6 +52,7 @@ class main:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_j:
                         bullet.bullet(self.bullet , self.ship.rect.midtop , self.bul_img )
+                        pygame.mixer.Sound.play(self.shoot_eff)
 
                     if event.key == pygame.K_l:
                         self._heal()
@@ -77,6 +80,7 @@ class main:
     
         if pygame.sprite.groupcollide(self.bullet , self.rock , True , True):
             self.score += 1
+            pygame.mixer.Sound.play(self.rock_exp_eff)
 
         if self.ship.Hp == 0:
             self.running = False
