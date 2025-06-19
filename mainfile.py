@@ -31,11 +31,14 @@ class main:
         self.bul_img = pygame.image.load("images\\proto#bullet.png").convert_alpha()
         self.rock_img = pygame.image.load("images\\proto#astroid.png").convert_alpha()
         self.rock_img = pygame.transform.scale(self.rock_img , (64,64))
+        self.bgm = pygame.mixer.music.load("audio\\Project_Space Shooter_Final.mp3")
+        pygame.mixer.music.set_volume(1)
 
         
     def gameloop(self):
         put_astroid = pygame.event.custom_type()
         pygame.time.set_timer(put_astroid , 500)
+        pygame.mixer.music.play(loops= -1)
         
         while self.running:
             rock_point = random.randint(0 , Set.SCREEN_SIZE[0]) , random.randint(0 , 20) 

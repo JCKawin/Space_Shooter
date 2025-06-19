@@ -10,7 +10,6 @@ class Rock(pygame.sprite.Sprite):
         self.image = self.o_image.copy()
         self.rect = self.o_image.get_frect(center = location)
         self.direction = pygame.Vector2(random.randint(-1,1) , 1)
-        self.direction = self.direction.normalize() if self.direction else self.direction
         self.angle = 0
 
 
