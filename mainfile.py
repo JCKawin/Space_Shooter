@@ -51,17 +51,17 @@ class main:
                     if event.key == pygame.K_l:
                         self._heal()
             
-            self.dt = self.clock.tick()
             self.screen.blit(self.background , (0,0))
             self.screen.blit(self.ship.image , self.ship.rect)
             self.rock.draw(self.screen)
             self.bullet.draw(self.screen)
             self._UI()      
-            pygame.display.flip()
+            self.dt = self.clock.tick()
             self.rock.update(self.dt)       
             self.ship.update(self.dt) 
             self.bullet.update(self.dt)
             self._damage()
+            pygame.display.flip()
 
         else:
             self.gameover()
