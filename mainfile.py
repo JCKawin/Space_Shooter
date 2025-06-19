@@ -35,6 +35,8 @@ class main:
         pygame.mixer.music.set_volume(0.7)
         self.shoot_eff=pygame.mixer.Sound("audio\\Space Shooter_Fire.mp3")
         self.rock_exp_eff=pygame.mixer.Sound("audio\\Space Shooter_Explosion.mp3")
+        self.rock_impact=pygame.mixer.Sound("audio\\Space Shooter_Asteroid Impact.mp3")
+        self.ship_heal_eff=pygame.mixer.Sound("audio\\Space Shooter_Healing.mp3")
 
         
     def gameloop(self):
@@ -56,6 +58,7 @@ class main:
 
                     if event.key == pygame.K_l:
                         self._heal()
+                        pygame.mixer.Sound.play(self.ship_heal_eff)
             
             self.screen.blit(self.background , (0,0))
             self.screen.blit(self.ship.image , self.ship.rect)
@@ -74,6 +77,7 @@ class main:
 
     def _damage(self):
         if pygame.sprite.spritecollide(self.ship , self.rock , True):
+            pygame.mixer.Sound.play(self.rock_impact)
             self.ship.Hp -= 1
             self.health_bar_colour = 'red'
             self.start_colour = time.time()
@@ -87,6 +91,7 @@ class main:
 
         if round(time.time() - self.start_colour , 1) == 0.3 : 
             self.health_bar_colour = 'white'
+            
 
     def _heal(self):
         if self.score >= 10 and self.ship.Hp < 90:
