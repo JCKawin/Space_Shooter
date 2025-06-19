@@ -11,19 +11,27 @@ class main:
         pygame.init()
         pygame.display.init()
         pygame.font.init()
+        pygame.mixer.init()
         self.screen = pygame.display.set_mode(Set.SCREEN_SIZE)
+        self.load_asserts()
         self.clock = pygame.time.Clock()
-        self.background = pygame.image.load("images\\proto#background.bmp")
         self.rock = pygame.sprite.Group()  
         self.bullet = pygame.sprite.Group()     
         self.running = True
         self.score = 0 
-        self.f_uwl = pygame.font.Font("fonts\\VT323-Regular.ttf" , 30)
         self.f_pkl = pygame.font.Font(None, 30)       
         self.ship = ship.ship(self)
         self.dt = 0
         self.health_bar_colour = 'white'
         self.start_colour = time.time()
+
+    def load_asserts(self):
+        self.background = pygame.image.load("images\\proto#background.bmp")
+        self.f_uwl = pygame.font.Font("fonts\\VT323-Regular.ttf" , 30)
+        self.bul_img = pygame.image.load("images\\proto#bullet.png").convert_alpha()
+        self.rock_img = pygame.image.load("images\\proto#astroid.png").convert_alpha()
+        self.rock_img = pygame.transform.scale(self.rock_img , (64,64))
+
         
     def gameloop(self):
         put_astroid = pygame.event.custom_type()
@@ -35,10 +43,10 @@ class main:
                 if event.type == pygame.QUIT:
                     self.running = False
                 if event.type == put_astroid:
-                    astroid.Rock(self.rock , rock_point)
+                    astroid.Rock(self.rock , rock_point , self.rock_img)
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_j:
-                        bullet.bullet(self.bullet , self.ship.rect.midtop )
+                        bullet.bullet(self.bullet , self.ship.rect.midtop , self.bul_img )
 
                     if event.key == pygame.K_l:
                         self._heal()

@@ -4,10 +4,9 @@ import pygame
 
 
 class Rock(pygame.sprite.Sprite):
-    def __init__(self, group , location) -> None:
-        super().__init__(group)
-        self.o_image =  pygame.image.load("images\\proto#astroid.png").convert_alpha()
-        self.o_image = pygame.transform.scale(self.o_image , (64,64))
+    def __init__(self, group , location , image) -> None:
+        super().__init__(group)        
+        self.o_image = image
         self.image = self.o_image.copy()
         self.rect = self.o_image.get_frect(center = location)
         self.direction = pygame.Vector2(random.randint(-1,1) , 1)
