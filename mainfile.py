@@ -58,7 +58,6 @@ class main:
 
                     if event.key == pygame.K_l:
                         self._heal()
-                        pygame.mixer.Sound.play(self.ship_heal_eff)
             
             self.screen.blit(self.background , (0,0))
             self.screen.blit(self.ship.image , self.ship.rect)
@@ -99,6 +98,7 @@ class main:
             self.ship.Hp += 10
             self.health_bar_colour = 'blue'
             self.start_colour = time.time()
+            pygame.mixer.Sound.play(self.ship_heal_eff)
 
 
 
