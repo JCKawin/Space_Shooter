@@ -32,7 +32,7 @@ class main:
         self.rock_img = pygame.image.load("images\\proto#astroid.png").convert_alpha()
         self.rock_img = pygame.transform.scale(self.rock_img , (64,64))
         self.bgm = pygame.mixer.music.load("audio\\Project_Space Shooter_Final_Loop.mp3")
-        pygame.mixer.music.set_volume(0.7)
+        pygame.mixer.music.set_volume(0.5)
         self.shoot_eff=pygame.mixer.Sound("audio\\Space Shooter_Fire.mp3")
         self.rock_exp_eff=pygame.mixer.Sound("audio\\Space Shooter_Explosion.mp3")
         self.rock_impact=pygame.mixer.Sound("audio\\Space Shooter_Asteroid Impact.mp3")
