@@ -1,4 +1,4 @@
-import settings as Set
+from settings import *
 import pygame
 
 class bullet(pygame.sprite.Sprite):
@@ -9,7 +9,7 @@ class bullet(pygame.sprite.Sprite):
         self.rect = self.image.get_frect(midbottom = location)
 
     def update(self , dt) -> None:
-        self.rect.centery -= Set.BULLET_SPEED * dt # type: ignore
+        self.rect.centery -= BULLET_SPEED * dt # type: ignore
         if self.rect.bottom < 0: #type: ignore
             self.kill()
         
