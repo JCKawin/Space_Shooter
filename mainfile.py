@@ -53,8 +53,7 @@ class main:
         pygame.mixer.music.play(loops=-1)
 
         while self.running:
-            rock_point = random.randint(
-                0, SCREEN_SIZE[0]), random.randint(0, 20)
+            rock_point = random.randint(0, SCREEN_SIZE[0]), random.randint(0, 20)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
