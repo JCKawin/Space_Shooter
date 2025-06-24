@@ -15,10 +15,10 @@ class ship():
 
     def update(self, dt):
         keypressed = pygame.key.get_pressed()
-        self.direction.x = (int(keypressed[pygame.K_d] | keypressed[pygame.K_RIGHT]) - int(keypressed[pygame.K_a] | keypressed[pygame.K_LEFT])) * MOVEMENT_SPEED * dt
-        self.direction.y = (int(keypressed[pygame.K_s] | keypressed[pygame.K_DOWN]) - int(keypressed[pygame.K_w] | keypressed[pygame.K_UP])) * MOVEMENT_SPEED * dt
-
-        self.rect.center += self.direction
+        self.direction.x = (int(keypressed[pygame.K_d] | keypressed[pygame.K_RIGHT]) - int(keypressed[pygame.K_a] | keypressed[pygame.K_LEFT]))
+        self.direction.y = (int(keypressed[pygame.K_s] | keypressed[pygame.K_DOWN]) - int(keypressed[pygame.K_w] | keypressed[pygame.K_UP])) 
+        self.direction = self.direction.normalize() if self.direction else self.direction
+        self.rect.center += self.direction * MOVEMENT_SPEED * dt
         if self.rect.right < self.scr_rect.left:
             self.rect.left = self.scr_rect.right
         elif self.rect.left > self.scr_rect.right:
