@@ -29,6 +29,8 @@ class main:
         self.dt = 0
         self.health_bar_colour = 'white'
         self.start_colour = time.time()
+        self.time = time.time()
+        self.finish_time = time.time()
 
     def load_asserts(self):
         self.background = pygame.image.load(join("images" , "proto#background.bmp"))
@@ -44,6 +46,7 @@ class main:
         self.rock_impact=pygame.mixer.Sound(join("audio", "Space Shooter_Asteroid Impact.mp3"))
         self.ship_heal_eff=pygame.mixer.Sound(join("audio", "Space Shooter_Healing.mp3"))
 
+
     def menu(self):
         pass
 
@@ -52,6 +55,7 @@ class main:
         put_astroid = pygame.event.custom_type()
         pygame.time.set_timer(put_astroid, 500)
         pygame.mixer.music.play(loops=-1)
+        self.time = time.time()
 
         while self.running:
             rock_point = random.randint(0, SCREEN_SIZE[0]), random.randint(0, 20)
@@ -115,16 +119,20 @@ class main:
         healthbar = pygame.rect.Rect(30, SCREEN_SIZE[1] - 50, self.ship.Hp * 4, 20)
         pygame.draw.rect(self.screen, self.health_bar_colour, healthbar)
         self.printf(self.screen, f"health {self.ship.Hp}", (34, SCREEN_SIZE[1] - 55), 'black', self.f_uwl) 
-        self.printf(self.screen, f"FPS: {round(self.clock.get_fps(), 0)}", (30, 30), 'white', self.f_pkl)
-        self.printf(self.screen, f"Score : {self.score}",(SCREEN_SIZE[0] - 120, 20), 'white', self.f_pkl)
+        self.printf(self.screen, f"FPS: {round(self.clock.get_fps(), 0)}", (30, 30), 'black', self.f_pkl)
+        self.printf(self.screen, f"Score : {self.score}",(SCREEN_SIZE[0] - 120, 20), 'black', self.f_pkl)
+        if self.running:
+            self.printf(self.screen , f"played : {time.time() - self.time: .2f} sec" , (SCREEN_SIZE[0] - 200 , SCREEN_SIZE[1] - 30) , 'black' , self.f_pkl)
 
     def gameover(self):
+        self.finish_time = time.time() - self.time
         while True:
             self.screen.fill(BG_COLOR)
             self.screen.blit(self.ship.image, self.ship.rect)
             self.rock.draw(self.screen)
             self.printf(self.screen , "GAME OVER" , (0,0) , "white" , self.f_uwl_big , True )
             self.printf(self.screen , "Press Space to continue" , (10 , 500) , 'white' ,  self.f_pkl)
+            self.printf(self.screen , f" You survived for {round(self.finish_time, 2)} seconds" , (10 , 200) , 'red' , self.f_pkl)
             self.clock.tick()
             self._UI()
             self.rock.update(self.dt)
