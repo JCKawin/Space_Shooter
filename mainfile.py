@@ -18,7 +18,7 @@ class main:
         # Set up game window
         self.screen = pygame.display.set_mode(SCREEN_SIZE)
         pygame.display.set_caption("Sky Shooter")
-        self.load_asserts()  # Load images, fonts, and sounds
+        self.load_asserts()
         self.clock = pygame.time.Clock()
         self.rock = pygame.sprite.Group()   # Group for asteroids
         self.bullet = pygame.sprite.Group() # Group for bullets
@@ -40,6 +40,8 @@ class main:
         self.bul_img = pygame.image.load(join("images", "proto#bullet.png")).convert_alpha()
         self.rock_img = pygame.image.load(join("images", "proto#astroid.png")).convert_alpha()
         self.rock_img = pygame.transform.scale(self.rock_img , (64,64))
+        self.under_cloud = pygame.image.load(join("images" , "under_cloud.png")).convert_alpha()
+        self.over_cloud = pygame.image.load(join("images" , "over_cloud.png")).convert_alpha()
         self.bgm = pygame.mixer.music.load(join("audio", "Project_Space Shooter_Final_Loop.mp3"))
         pygame.mixer.music.set_volume(0.5)
         self.shoot_eff = pygame.mixer.Sound(join("audio", "Space Shooter_Fire.mp3"))
@@ -160,4 +162,5 @@ class main:
 if __name__ == "__main__":
     # Start the game
     Game: main = main()
+
     Game.gameloop()
