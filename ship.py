@@ -6,8 +6,8 @@ class ship():
     def __init__(self, main):
         self.screen = main.screen
         self.scr_rect = self.screen.get_rect()
-        self.image = pygame.image.load("images\\F-14A.png").convert_alpha()
-        self.image = pygame.transform.scale(self.image, (154, 154))
+        self.image = pygame.image.load("images\\proto#ship.png").convert_alpha()
+        self.image = pygame.transform.scale(self.image, (128,128))
         self.rect = self.image.get_frect(center=(SCREEN_SIZE[0]/2, SCREEN_SIZE[1]/2))
         self.direction = pygame.Vector2(0, 0)
         self.ismoving = False

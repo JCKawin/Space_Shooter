@@ -56,7 +56,7 @@ class main:
             rock_point = random.randint(0, SCREEN_SIZE[0]), random.randint(0, 20)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    self.running = False
+                    sys.exit()
                 if event.type == put_astroid:
                     astroid.Rock(self.rock, rock_point, self.rock_img)
                 if event.type == pygame.KEYDOWN:
@@ -114,7 +114,7 @@ class main:
         healthbar = pygame.rect.Rect(30, SCREEN_SIZE[1] - 50, self.ship.Hp * 4, 20)
         pygame.draw.rect(self.screen, self.health_bar_colour, healthbar)
         self.printf(self.screen, f"health {self.ship.Hp}", (34, SCREEN_SIZE[1] - 55), 'black', self.f_uwl) 
-        self.printf(self.screen, f"FPS: {round(self.clock.get_fps(), 0)}", (30, 30), 'white', self.f_pkl)
+        #self.printf(self.screen, f"FPS: {round(self.clock.get_fps(), 0)}", (30, 30), 'white', self.f_pkl)
         self.printf(self.screen, f"Score : {self.score}",(SCREEN_SIZE[0] - 120, 20), 'white', self.f_pkl)
 
     def gameover(self):
