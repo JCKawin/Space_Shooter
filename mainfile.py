@@ -6,6 +6,7 @@ from settings import *
 import ship
 import astroid
 import bullet
+import cloud
 from os.path import join
 
 class main:
@@ -19,9 +20,11 @@ class main:
         self.screen = pygame.display.set_mode(SCREEN_SIZE)
         pygame.display.set_caption("Sky Shooter")
         self.load_asserts()
-        self.clock = pygame.time.Clock()
+        self.clock = pygame.time.Clock() #Clock Variable
         self.rock = pygame.sprite.Group()   # Group for asteroids
         self.bullet = pygame.sprite.Group() # Group for bullets
+        self.under_cloud = pygame.sprite.Group() # clouds under the airplane
+        self.over_cloud = pygame.sprite.Group() # clouds over the airplalne
         self.running = True
         self.score = 0
         self.f_pkl = pygame.font.Font(None, 30)
@@ -40,8 +43,8 @@ class main:
         self.bul_img = pygame.image.load(join("images", "proto#bullet.png")).convert_alpha()
         self.rock_img = pygame.image.load(join("images", "proto#astroid.png")).convert_alpha()
         self.rock_img = pygame.transform.scale(self.rock_img , (64,64))
-        self.under_cloud = pygame.image.load(join("images" , "under_cloud.png")).convert_alpha()
-        self.over_cloud = pygame.image.load(join("images" , "over_cloud.png")).convert_alpha()
+        self.under_cloud_img = pygame.image.load(join("images" , "under_cloud.png")).convert_alpha()
+        self.over_cloud_img = pygame.image.load(join("images" , "over_cloud.png")).convert_alpha()
         self.bgm = pygame.mixer.music.load(join("audio", "Project_Space Shooter_Final_Loop.mp3"))
         pygame.mixer.music.set_volume(0.5)
         self.shoot_eff = pygame.mixer.Sound(join("audio", "Space Shooter_Fire.mp3"))
@@ -58,7 +61,7 @@ class main:
         pygame.time.set_timer(put_astroid, 500)
         pygame.mixer.music.play(loops=-1)
         self.time = time.time()
-        
+        cloud.cloud(self.under_cloud , self.under_cloud_img)
         while self.running:
             rock_point = random.randint(0, SCREEN_SIZE[0]), random.randint(0, 20)
             for event in pygame.event.get():
@@ -72,12 +75,18 @@ class main:
                         pygame.mixer.Sound.play(self.shoot_eff)
                     if event.key == pygame.K_l:
                         self._heal()
+            if not bool(len(self.under_cloud)): cloud.cloud(self.under_cloud , self.under_cloud_img)
+            if not bool(len(self.over_cloud)): cloud.cloud(self.over_cloud , self.over_cloud_img)
             self.screen.fill(BG_COLOR)
+            self.under_cloud.draw(self.screen)
             self.screen.blit(self.ship.image, self.ship.rect)
+            self.over_cloud.draw(self.screen)
             self.rock.draw(self.screen)
             self.bullet.draw(self.screen)
             self._UI()
             self.dt = self.clock.tick()
+            self.under_cloud.update(0.1 , self.dt)
+            self.over_cloud.update(0.15,self.dt)
             self.rock.update(self.dt)
             self.ship.update(self.dt)
             self.bullet.update(self.dt)
@@ -128,6 +137,7 @@ class main:
         if self.running:
             self.printf(self.screen, f"played : {time.time() - self.time: .2f} sec", (SCREEN_SIZE[0] - 200, SCREEN_SIZE[1] - 30), 'black', self.f_pkl)
 
+    
     def gameover(self):
         # Game over screen loop
         self.finish_time = time.time() - self.time
