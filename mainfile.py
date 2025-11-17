@@ -9,27 +9,19 @@ import bullet
 import cloud
 from os.path import join
 
-class main:
-    def __init__(self):
-        # Initialize pygame modules
-        pygame.init()
-        pygame.display.init()
-        pygame.font.init()
-        pygame.mixer.init()
-        # Set up game window
-        self.screen = pygame.display.set_mode(SCREEN_SIZE)
-        pygame.display.set_caption("Sky Shooter")
+class level1:
+    def __init__(self , main):
+        self.screen = main.screen
         self.load_asserts()
-        self.clock = pygame.time.Clock() #Clock Variable
+        self.clock = main.clock #Clock Variable
         self.rock = pygame.sprite.Group()   # Group for asteroids
         self.bullet = pygame.sprite.Group() # Group for bullets
         self.under_cloud = pygame.sprite.Group() # clouds under the airplane
         self.over_cloud = pygame.sprite.Group() # clouds over the airplalne
-        self.running = True
-        self.score = 0
         self.f_pkl = pygame.font.Font(None, 30)
         self.ship = ship.ship(self)         # Player's ship
-        self.dt = 0
+        self.dt = main.dt
+        self.running = main.running
         self.health_bar_colour = 'white'
         self.start_colour = time.time()
         self.time = time.time()
@@ -52,10 +44,8 @@ class main:
         self.rock_impact = pygame.mixer.Sound(join("audio", "Space Shooter_Asteroid Impact.mp3"))
         self.ship_heal_eff = pygame.mixer.Sound(join("audio", "Space Shooter_Healing.mp3"))
 
-    def menu(self):
-        pass  # Placeholder for menu logic
 
-    def gameloop(self):
+    def run(self):
         # Main game loop
         put_astroid = pygame.event.custom_type()
         pygame.time.set_timer(put_astroid, 500)
@@ -168,9 +158,3 @@ class main:
         if center:
             tex_rect.center = screen.get_rect().center 
         screen.blit(tex, tex_rect)
-
-if __name__ == "__main__":
-    # Start the game
-    Game: main = main()
-
-    Game.gameloop()
