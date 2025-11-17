@@ -1,3 +1,5 @@
+import sys
+import levels
 import mainfile
 import menu
 import pygame
@@ -17,13 +19,17 @@ class main:
 
 
         self.level = {
-            "main" : mainfile.level1(self)
+            "menu" : menu.menu(self),
+            "main" : mainfile.level1(self),
+            "base" : levels.base_level(self)
 
         }
 
         
     def run(self):
-        self.level[self.state].run()
+        while True:
+            
+            self.state = self.level.get(self.state , "menu").run()
 
 
     

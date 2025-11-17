@@ -7,7 +7,7 @@ We don't expect you to do a lot of work for running Our Code
 This projects is a 2D game of shooting the space rocks from a space ship 
 
 This is Made by the Team இனிழ் association with Paperbucket .
-JCKawin , JosephDaniel , JaiSuriyaa (paperbucket) 
+JCKawin , JosephDaniel , JaiSuriyaa 
 
 In order to run this game : 
 
