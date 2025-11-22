@@ -147,7 +147,7 @@ class level1:
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
-                        return "menu"
+                        STATE = "menu"
 
     @staticmethod
     def printf(screen, text, rect, colour, font, center: bool = False):

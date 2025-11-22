@@ -1,3 +1,4 @@
+from pdb import run
 import random
 from os.path import join
 import sys
@@ -78,8 +79,11 @@ class base_level:
         else:
             pygame.mixer.music.fadeout(1000)
             self.gameover()
+            self._reset()
+        
+        return "menu"
 
-        pygame.quit()
+        
 
     def _damage(self):
         if pygame.sprite.spritecollide(self.ship, self.rock, True):
@@ -92,7 +96,7 @@ class base_level:
             self.score += 1
             pygame.mixer.Sound.play(self.rock_exp_eff)
 
-        if self.ship.Hp == 0:
+        if self.ship.Hp <= 0:
             self.running = False
 
         if round(time.time() - self.start_colour, 1) == 0.3:
@@ -112,9 +116,17 @@ class base_level:
         self.printf(self.screen, f"health {self.ship.Hp}", (34, SCREEN_SIZE[1] - 55), 'black', self.f_uwl) 
         #self.printf(self.screen, f"FPS: {round(self.clock.get_fps(), 0)}", (30, 30), 'white', self.f_pkl)
         self.printf(self.screen, f"Score : {self.score}",(SCREEN_SIZE[0] - 120, 20), 'white', self.f_pkl)
+    
+    def _reset(self):
+        self.running = True
+        self.score = 0
+        self.health_bar_colour = 'white'
+        self.ship.Hp = 100
+
 
     def gameover(self):
-        while True:
+        runit = True
+        while runit:
             self.screen.fill(BG_COLOR)
             self.screen.blit(self.background, (0, 0))
             self.screen.blit(self.ship.image, self.ship.rect)
@@ -130,9 +142,7 @@ class base_level:
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
-                        return "menu"
-            
-        
+                        runit = False
 
     @staticmethod
     def printf(screen, text, rect, colour, font , center : bool = False):

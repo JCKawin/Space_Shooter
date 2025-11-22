@@ -28,8 +28,13 @@ class main:
         
     def run(self):
         while True:
-            
-            self.state = self.level.get(self.state , "menu").run()
+            dt = self.clock.tick(FPS) if FPS else self.clock.tick()
+            for e in pygame.event.get():
+                if e.type == pygame.QUIT:
+                    sys.exit()
+                
+            self.state = self.level[self.state].run()
+
 
 
     

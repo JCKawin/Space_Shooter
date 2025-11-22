@@ -4,3 +4,5 @@ BG_COLOR: str = "#00b5e2"
 MOVEMENT_SPEED: float = 1
 BULLET_SPEED: float = 2
 ASTROID_SPEED: float = 0.5
+FPS : int = 144
+STATE : str = "menu"
