@@ -22,6 +22,7 @@ class level1:
         self.ship = ship.f14a(self)         # Player's ship
         self.dt = main.dt
         self.running = main.running
+        self.score = 0
         self.health_bar_colour = 'white'
         self.start_colour = time.time()
         self.time = time.time()
@@ -86,9 +87,9 @@ class level1:
         else:
             pygame.mixer.music.fadeout(1000)
             self.gameover()
-
-        pygame.quit()
-
+            self._reset()
+        return "menu"
+    
     def _damage(self):
         # Handle collisions and update health/score
         if pygame.sprite.spritecollide(self.ship, self.rock, True):
@@ -127,11 +128,19 @@ class level1:
         if self.running:
             self.printf(self.screen, f"played : {time.time() - self.time: .2f} sec", (SCREEN_SIZE[0] - 200, SCREEN_SIZE[1] - 30), 'black', self.f_pkl)
 
+    def _reset(self):
+            self.running = True
+            self.score = 0
+            self.health_bar_colour = 'white'
+            self.ship.Hp = 100
+
+
     
     def gameover(self):
         # Game over screen loop
+        runit = True
         self.finish_time = time.time() - self.time
-        while True:
+        while runit:
             self.screen.fill(BG_COLOR)
             self.screen.blit(self.ship.image, self.ship.rect)
             self.rock.draw(self.screen)
@@ -147,7 +156,8 @@ class level1:
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
-                        STATE = "menu"
+                        runit = False
+                    
 
     @staticmethod
     def printf(screen, text, rect, colour, font, center: bool = False):

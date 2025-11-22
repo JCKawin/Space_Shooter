@@ -9,7 +9,7 @@ class main:
     def __init__(self) -> None:
         pygame.init()
         self.screen = pygame.display.set_mode(SCREEN_SIZE)
-        pygame.display.set_caption("Sky Shooter")
+        pygame.display.set_caption("Space Shooter")
         self.clock = pygame.time.Clock() #Clock Variable
         self.running = True
         self.score = 0
