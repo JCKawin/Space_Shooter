@@ -25,6 +25,7 @@ class base_level:
         self.dt = 0
         self.health_bar_colour = 'white'
         self.start_colour = time.time()
+        self.paused = False
 
     def load_asserts(self):
         self.background = pygame.image.load(join("images" , "proto#background.bmp"))
@@ -54,7 +55,7 @@ class base_level:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
-                if event.type == put_astroid:
+                if event.type == put_astroid and not self.paused:
                     astroid.Rock(self.rock, rock_point, self.rock_img)
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_j:
@@ -63,6 +64,9 @@ class base_level:
 
                     if event.key == pygame.K_l:
                         self._heal()
+
+                    if event.key == pygame.K_ESCAPE:
+                        self.paused = not self.paused
             self.screen.fill(BG_COLOR)
             self.screen.blit(self.background, (0, 0))
             self.screen.blit(self.ship.image, self.ship.rect)
@@ -70,10 +74,13 @@ class base_level:
             self.bullet.draw(self.screen)
             self._UI()
             self.dt = self.clock.tick()
-            self.rock.update(self.dt)
-            self.ship.update(self.dt)
-            self.bullet.update(self.dt)
-            self._damage()
+            if not self.paused:    
+                self.rock.update(self.dt)
+                self.ship.update(self.dt)
+                self.bullet.update(self.dt)
+                self._damage()
+            else:
+                self.printf(self.screen , "PAUSED" , (0,0) , "red" , self.f_uwl_big , True )
             pygame.display.flip()
 
         else:
