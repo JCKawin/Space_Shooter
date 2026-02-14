@@ -1,6 +1,5 @@
 import sys
 import levels
-import mainfile
 import menu
 import pygame
 from settings import *
@@ -20,8 +19,8 @@ class main:
 
         self.level = {
             "menu" : menu.menu(self),
-            "main" : mainfile.level1(self),
-            "base" : levels.base_level(self)
+            "easy" : levels.easy(self),
+            "midi" : levels.medium(self)
 
         }
 

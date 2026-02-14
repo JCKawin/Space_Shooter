@@ -8,20 +8,23 @@ class menu:
         self.screen : pygame.surface.Surface = main.screen
         self.clock = main.clock
         pygame.mouse.set_visible(False)
-        self.font = pygame.font.Font(join("fonts" , "UnwaveLover-PV9AZ.otf") , 80) 
+        self.font = pygame.font.Font(join("fonts" , "UnwaveLover-PV9AZ.otf") , 80)
+        self.bg = pygame.image.load(join("images" , "menu_bg.jpeg")) 
+        self.bg = pygame.transform.scale(self.bg , (1280 , 720))
 
     def run(self):
         while True:
             self.clock.tick(60)
             self.screen.fill("#000000")
-            classic = self.font.render("Classic" , True , "white" , "black")
-            sky = self.font.render("Sky" , True , "white" , "black")
-            classic_rect = classic.get_frect()
-            sky_rect = classic.get_frect()
-            classic_rect.topleft = (30 , 350)
-            sky_rect.topright = (1250 , 350)
-            self.screen.blit(classic ,classic_rect)
-            self.screen.blit(sky,sky_rect)
+            self.screen.blit(self.bg , (0,0))
+            easy = self.font.render("Easy" , True , "white")
+            medium = self.font.render("Medium" , True , "white")
+            easy_rect = easy.get_rect()
+            medium_rect = medium.get_rect()
+            easy_rect.topleft = (30 , 350)
+            medium_rect.topright = (1250 , 350)
+            self.screen.blit(easy ,easy_rect)
+            self.screen.blit(medium,medium_rect)
             pygame.draw.circle(self.screen , "white" , pygame.mouse.get_pos() , 5)
             pygame.display.flip()
 
@@ -30,7 +33,7 @@ class menu:
                     sys.exit()
                 
             m_pressed = pygame.mouse.get_pressed()
-            if sky_rect.collidepoint(pygame.mouse.get_pos()) and m_pressed[0]:
-                return "main"
-            elif classic_rect.collidepoint(pygame.mouse.get_pos()) and m_pressed[0]:
-                return "base"
+            if easy_rect.collidepoint(pygame.mouse.get_pos()) and m_pressed[0]:
+                return "easy"
+            elif medium_rect.collidepoint(pygame.mouse.get_pos()) and m_pressed[0]:
+                return "midi"
