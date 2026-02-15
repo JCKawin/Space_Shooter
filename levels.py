@@ -8,6 +8,7 @@ import ship
 import astroid
 import bullet
 import cloud
+import blast_anime
 
 
 
@@ -68,6 +69,8 @@ class easy:
 
                     if event.key == pygame.K_ESCAPE:
                         self.paused = not self.paused
+                        pygame.mixer.music.pause() if self.paused else pygame.mixer.music.unpause()
+    
             self.screen.fill(BG_COLOR)
             self.screen.blit(self.background, (0, 0))
             self.screen.blit(self.ship.image, self.ship.rect)
@@ -167,6 +170,7 @@ class medium:
         self.clock = main.clock #Clock Variable
         self.rock = pygame.sprite.Group()   # Group for asteroids
         self.bullet = pygame.sprite.Group() # Group for bullets
+        self.missle = pygame.sprite.Group() # Group for Missles
         self.under_cloud = pygame.sprite.Group() # clouds under the airplane
         self.over_cloud = pygame.sprite.Group() # clouds over the airplalne
         self.f_pkl = pygame.font.Font(None, 30)
@@ -179,15 +183,23 @@ class medium:
         self.time = time.time()
         self.finish_time = time.time()
         self.paused = False
+        self.missle_time = 0
+        self.blast_list = []
+        self.todel_blast = []
 
     def load_asserts(self):
+        self.blast_anime = []
+        for i in range(1 , 51):
+            self.blast_anime[i - 1] = pygame.image.load(join("images" , "blast_anime1" , f"blast({i})"))
         # Load images, fonts, and sounds
         self.background = pygame.image.load(join("images" , "proto#background.bmp"))
         self.f_uwl_big = pygame.font.Font(join("fonts", "VT323-Regular.ttf") , 360)
         self.f_uwl = pygame.font.Font(join("fonts", "VT323-Regular.ttf") , 30)
         self.bul_img = pygame.image.load(join("images", "proto#bullet.png")).convert_alpha()
-        self.rock_img = pygame.image.load(join("images", "proto#astroid.png")).convert_alpha()
+        self.rock_img = pygame.image.load(join("images", "astroid_grey.png")).convert_alpha()
         self.rock_img = pygame.transform.scale(self.rock_img , (64,64))
+        self.miss_img = pygame.image.load(join("images" , "missile.png")).convert_alpha()
+        self.miss_img = pygame.transform.scale(self.miss_img , (32 , 128))
         self.under_cloud_img = pygame.image.load(join("images" , "cloud" , "under_cloud.png")).convert_alpha()
         self.over_cloud_img = pygame.image.load(join("images" , "cloud" ,  "over_cloud.png")).convert_alpha()
         self.bgm = pygame.mixer.music.load(join("audio", "Project_Space Shooter_Final_Loop.mp3"))
@@ -207,17 +219,28 @@ class medium:
         cloud.cloud(self.under_cloud , self.under_cloud_img)
         while self.running:
             rock_point = random.randint(0, SCREEN_SIZE[0]), random.randint(0, 20)
+            missle_point = random.randint( 0 , SCREEN_SIZE[0]) , random.randint(0 , 40)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
                 if event.type == put_astroid and not self.paused:
                     astroid.Rock(self.rock, rock_point, self.rock_img)
+                    self.missle_time += 1
+                    if self.missle_time == 4:
+                        self.missle_time = 0
+                        astroid.Missle(self.missle , missle_point , self.miss_img)
+                        
+
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_j:
                         bullet.bullet(self.bullet, self.ship.rect.midtop, self.bul_img)
                         pygame.mixer.Sound.play(self.shoot_eff)
                     if event.key == pygame.K_l:
                         self._heal()
+
+                    if event.key == pygame.K_ESCAPE:
+                        self.paused = not self.paused
+                        pygame.mixer.music.pause() if self.paused else pygame.mixer.music.unpause() 
             if not bool(len(self.under_cloud)): cloud.cloud(self.under_cloud , self.under_cloud_img)
             if not bool(len(self.over_cloud)): cloud.cloud(self.over_cloud , self.over_cloud_img)
             self.screen.fill(BG_COLOR)
@@ -226,6 +249,8 @@ class medium:
             self.over_cloud.draw(self.screen)
             self.rock.draw(self.screen)
             self.bullet.draw(self.screen)
+            self.missle.draw(self.screen)
+            self._blast_draw()
             self._UI()
             self.dt = self.clock.tick()
             if not self.paused:    
@@ -234,6 +259,7 @@ class medium:
                 self.rock.update(self.dt)
                 self.ship.update(self.dt)
                 self.bullet.update(self.dt)
+                self.missle.update(self.dt)
                 self._damage()
             else:
                 self.printf(self.screen , "PAUSED" , (0,0) , "red" , self.f_uwl_big , True )
@@ -256,6 +282,7 @@ class medium:
         if pygame.sprite.groupcollide(self.bullet, self.rock, True, True):
             self.score += 1
             pygame.mixer.Sound.play(self.rock_exp_eff)
+
 
         if self.ship.Hp == 0:
             self.running = False
@@ -312,7 +339,19 @@ class medium:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         runit = False
-                    
+    
+
+    
+    def _blast_draw(self):
+        for i in self.blast_list[::-1]:
+            if i[0] == 51:
+                self.blast_list.remove(i)
+
+        for i in self.blast_list:
+            self.screen.blit(self.blast_anime[i[0]%51] , i[1])
+            i[0] += 1
+    
+                                        
 
     @staticmethod
     def printf(screen, text, rect, colour, font, center: bool = False):
