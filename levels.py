@@ -8,7 +8,6 @@ import ship
 import astroid
 import bullet
 import cloud
-import blast_anime
 
 
 
