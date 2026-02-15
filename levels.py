@@ -2,6 +2,7 @@ import random
 from os.path import join
 import sys
 import time
+from tkinter import W
 import pygame
 from settings import *
 import ship
@@ -189,7 +190,7 @@ class medium:
     def load_asserts(self):
         self.blast_anime = []
         for i in range(1 , 51):
-            self.blast_anime[i - 1] = pygame.image.load(join("images" , "blast_anime1" , f"blast({i})"))
+            self.blast_anime.append(pygame.image.load(join("images" , "blast_anime1" , f"blast ({i}).png")))
         # Load images, fonts, and sounds
         self.background = pygame.image.load(join("images" , "proto#background.bmp"))
         self.f_uwl_big = pygame.font.Font(join("fonts", "VT323-Regular.ttf") , 360)
@@ -282,8 +283,14 @@ class medium:
             self.score += 1
             pygame.mixer.Sound.play(self.rock_exp_eff)
 
+        if pygame.sprite.spritecollide(self.ship , self.missle , True):
+            pygame.mixer.Sound.play(self.rock_impact)
+            self.ship.Hp -= 100
+            self.health_bar_colour = 'black'
+            self.start_colour = time.time()
 
-        if self.ship.Hp == 0:
+
+        if self.ship.Hp <= 0:
             self.running = False
 
         # Reset health bar color after short time
@@ -320,6 +327,7 @@ class medium:
     def gameover(self):
         # Game over screen loop
         runit = True
+        i = 0
         self.finish_time = time.time() - self.time
         while runit:
             self.screen.fill(BG_COLOR)
@@ -328,8 +336,11 @@ class medium:
             self.printf(self.screen, "GAME OVER", (0,0), "white", self.f_uwl_big, True)
             self.printf(self.screen, "Press Space to continue", (10, 500), 'white', self.f_pkl)
             self.printf(self.screen, f" You survived for {round(self.finish_time, 2)} seconds", (10, 200), 'red', self.f_pkl)
-            self.clock.tick()
+            self.clock.tick(60)
             self._UI()
+            if i < 51:
+                self.screen.blit(self.blast_anime[i] , self.ship.rect)
+                i+=1
             self.rock.update(self.dt)
             pygame.display.flip()
             for event in pygame.event.get():

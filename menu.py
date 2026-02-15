@@ -18,7 +18,7 @@ class menu:
             self.screen.fill("#000000")
             self.screen.blit(self.bg , (0,0))
             easy = self.font.render("Easy" , True , "white")
-            medium = self.font.render("Medium" , True , "white")
+            medium = self.font.render("Hard" , True , "white")
             easy_rect = easy.get_rect()
             medium_rect = medium.get_rect()
             easy_rect.topleft = (30 , 350)
