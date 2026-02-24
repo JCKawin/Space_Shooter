@@ -35,7 +35,7 @@ class loader():
             load_y = inx_y + self.inx.get_height() + 25
             self.screen.blit(self.texter, (load_x, load_y))
 
-            # 4. Progress bar
+            # Progress bar
             bar_w = 600
             bar_h = 24
             bar_x = cx - bar_w / 2

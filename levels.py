@@ -2,7 +2,6 @@ import random
 from os.path import join
 import sys
 import time
-from tkinter import W
 import pygame
 from settings import *
 import ship
@@ -338,7 +337,7 @@ class medium:
             self.printf(self.screen, f" You survived for {round(self.finish_time, 2)} seconds", (10, 200), 'red', self.f_pkl)
             self.clock.tick(60)
             self._UI()
-            if i < 51:
+            if i < len(self.blast_anime):
                 self.screen.blit(self.blast_anime[i] , self.ship.rect)
                 i+=1
             self.rock.update(self.dt)
