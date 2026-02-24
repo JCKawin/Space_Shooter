@@ -10,14 +10,13 @@
 
 import pygame
 from settings import *
-from os.path import join
 
 
 class base_ship():
     def __init__(self, main):
         self.screen = main.screen
         self.scr_rect = self.screen.get_rect()
-        self.image = pygame.image.load(join("images" , "proto#ship.png")).convert_alpha()
+        self.image = pygame.image.load(IMG_SHIP).convert_alpha()
         self.image = pygame.transform.scale(self.image, (154, 154))
         self.rect = self.image.get_frect(center=(SCREEN_SIZE[0]/2, SCREEN_SIZE[1]/2))
         self.direction = pygame.Vector2(0, 0)
@@ -43,7 +42,7 @@ class base_ship():
 class f14a(base_ship):
     def __init__(self, main):
         super().__init__(main)
-        self.image = pygame.image.load(join("images" , "ship" , "F-14A.png")).convert_alpha()
+        self.image = pygame.image.load(IMG_SHIP_F14A).convert_alpha()
         self.image = pygame.transform.scale(self.image, (154, 154)) 
 
     def update(self, dt):

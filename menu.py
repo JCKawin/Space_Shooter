@@ -8,7 +8,6 @@
 +--------------------------------------------------------------------------------------+
 """
 
-from os.path import join
 import pygame
 from settings import *
 import sys
@@ -18,8 +17,8 @@ class menu:
         self.screen : pygame.surface.Surface = main.screen
         self.clock = main.clock
         pygame.mouse.set_visible(False)
-        self.font = pygame.font.Font(join("fonts" , "UnwaveLover-PV9AZ.otf") , 80)
-        self.bg = pygame.image.load(join("images" , "menu_bg.jpeg")) 
+        self.font = pygame.font.Font(FONT_UNWAVE , 80)
+        self.bg = pygame.image.load(IMG_MENU_BG) 
         self.bg = pygame.transform.scale(self.bg , (1280 , 720))
 
     def run(self):

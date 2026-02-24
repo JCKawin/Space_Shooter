@@ -32,7 +32,7 @@ class main:
     def __init__(self) -> None:
         pygame.init()
         self.screen = pygame.display.set_mode(SCREEN_SIZE)
-        logo = pygame.image.load(join("images" , "logo.jpg"))
+        logo = pygame.image.load(IMG_LOGO)
         pygame.display.set_caption("Space Shooter")
         pygame.display.set_icon(logo)
         self.clock = pygame.time.Clock() #Clock Variable

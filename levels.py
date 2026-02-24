@@ -39,18 +39,18 @@ class easy:
         self.paused = False
 
     def load_asserts(self):
-        self.background = pygame.image.load(join("images" , "proto#background.bmp"))
-        self.f_uwl_big = pygame.font.Font(join("fonts", "VT323-Regular.ttf") , 360)
-        self.f_uwl = pygame.font.Font(join("fonts", "VT323-Regular.ttf") , 30)
-        self.bul_img = pygame.image.load(join("images", "proto#bullet.png")).convert_alpha()
-        self.rock_img = pygame.image.load(join("images", "proto#astroid.png")).convert_alpha()
+        self.background = pygame.image.load(IMG_BACKGROUND)
+        self.f_uwl_big = pygame.font.Font(FONT_VT323 , 360)
+        self.f_uwl = pygame.font.Font(FONT_VT323 , 30)
+        self.bul_img = pygame.image.load(IMG_BULLET).convert_alpha()
+        self.rock_img = pygame.image.load(IMG_ASTROID).convert_alpha()
         self.rock_img = pygame.transform.scale(self.rock_img , (64,64))
-        self.bgm = pygame.mixer.music.load(join("audio", "Project_Space Shooter_Final_Loop.mp3"))
+        self.bgm = pygame.mixer.music.load(AUDIO_BGM)
         pygame.mixer.music.set_volume(0.5)
-        self.shoot_eff=pygame.mixer.Sound(join("audio", "Space Shooter_Fire.mp3"))
-        self.rock_exp_eff=pygame.mixer.Sound(join("audio", "Space Shooter_Explosion.mp3"))
-        self.rock_impact=pygame.mixer.Sound(join("audio", "Space Shooter_Asteroid Impact.mp3"))
-        self.ship_heal_eff=pygame.mixer.Sound(join("audio", "Space Shooter_Healing.mp3"))
+        self.shoot_eff=pygame.mixer.Sound(AUDIO_SHOOT)
+        self.rock_exp_eff=pygame.mixer.Sound(AUDIO_EXPLOSION)
+        self.rock_impact=pygame.mixer.Sound(AUDIO_IMPACT)
+        self.ship_heal_eff=pygame.mixer.Sound(AUDIO_HEAL)
 
     def menu(self):
         pass
@@ -199,24 +199,24 @@ class medium:
     def load_asserts(self):
         self.blast_anime = []
         for i in range(1 , 51):
-            self.blast_anime.append(pygame.image.load(join("images" , "blast_anime1" , f"blast ({i}).png")))
+            self.blast_anime.append(pygame.image.load(join(IMG_BLAST_DIR , f"blast ({i}).png")))
         # Load images, fonts, and sounds
-        self.background = pygame.image.load(join("images" , "proto#background.bmp"))
-        self.f_uwl_big = pygame.font.Font(join("fonts", "VT323-Regular.ttf") , 360)
-        self.f_uwl = pygame.font.Font(join("fonts", "VT323-Regular.ttf") , 30)
-        self.bul_img = pygame.image.load(join("images", "proto#bullet.png")).convert_alpha()
-        self.rock_img = pygame.image.load(join("images", "astroid_grey.png")).convert_alpha()
+        self.background = pygame.image.load(IMG_BACKGROUND)
+        self.f_uwl_big = pygame.font.Font(FONT_VT323 , 360)
+        self.f_uwl = pygame.font.Font(FONT_VT323 , 30)
+        self.bul_img = pygame.image.load(IMG_BULLET).convert_alpha()
+        self.rock_img = pygame.image.load(IMG_ASTROID_GREY).convert_alpha()
         self.rock_img = pygame.transform.scale(self.rock_img , (64,64))
-        self.miss_img = pygame.image.load(join("images" , "missile.png")).convert_alpha()
+        self.miss_img = pygame.image.load(IMG_MISSILE).convert_alpha()
         self.miss_img = pygame.transform.scale(self.miss_img , (32 , 128))
-        self.under_cloud_img = pygame.image.load(join("images" , "cloud" , "under_cloud.png")).convert_alpha()
-        self.over_cloud_img = pygame.image.load(join("images" , "cloud" ,  "over_cloud.png")).convert_alpha()
-        self.bgm = pygame.mixer.music.load(join("audio", "Project_Space Shooter_Final_Loop.mp3"))
+        self.under_cloud_img = pygame.image.load(IMG_CLOUD_UNDER).convert_alpha()
+        self.over_cloud_img = pygame.image.load(IMG_CLOUD_OVER).convert_alpha()
+        self.bgm = pygame.mixer.music.load(AUDIO_BGM)
         pygame.mixer.music.set_volume(0.5)
-        self.shoot_eff = pygame.mixer.Sound(join("audio", "Space Shooter_Fire.mp3"))
-        self.rock_exp_eff = pygame.mixer.Sound(join("audio", "Space Shooter_Explosion.mp3"))
-        self.rock_impact = pygame.mixer.Sound(join("audio", "Space Shooter_Asteroid Impact.mp3"))
-        self.ship_heal_eff = pygame.mixer.Sound(join("audio", "Space Shooter_Healing.mp3"))
+        self.shoot_eff = pygame.mixer.Sound(AUDIO_SHOOT)
+        self.rock_exp_eff = pygame.mixer.Sound(AUDIO_EXPLOSION)
+        self.rock_impact = pygame.mixer.Sound(AUDIO_IMPACT)
+        self.ship_heal_eff = pygame.mixer.Sound(AUDIO_HEAL)
 
 
     def run(self):

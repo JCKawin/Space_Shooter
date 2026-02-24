@@ -10,17 +10,16 @@
 
 import pygame
 from settings import *
-from  os.path import join
 
 class loader():
     def __init__(self,main):
         self.screen = main.screen
         self.clock = main.clock
         self.text = pygame.font.Font(None,48)
-        self.logo = pygame.transform.scale(pygame.image.load(join("images" , "logo.jpg")) , (386 , 386))
+        self.logo = pygame.transform.scale(pygame.image.load(IMG_LOGO) , (386 , 386))
         self.texter = self.text.render("Loading...",True,(255,255,255))
         self.JD = self.text.render("Made By : Joseph Daniel" , True , (255,255,255))
-        self.tamil = pygame.font.Font(join("fonts" , "tamil.ttf") , 72)
+        self.tamil = pygame.font.Font(FONT_TAMIL , 72)
         self.inx = self.tamil.render("இனிழ்" , True , (255 , 255, 255))
         self.progress = 0
         
