@@ -1,3 +1,13 @@
+"""
++--------------------------------------------------------------------------------------+
+|                              SPACE SHOOTER - ASTEROID MODULE                         |
+|                                Team: இனிழ் (Inizh)                                  |
+|                                                                                      |
+|  Asteroid and missile sprites that the player must dodge or destroy.                 |
+|  Handles asteroid rotation, movement, and missile tracking.                          |
++--------------------------------------------------------------------------------------+
+"""
+
 import random
 from settings import *
 import pygame

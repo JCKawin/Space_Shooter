@@ -1,3 +1,13 @@
+"""
++--------------------------------------------------------------------------------------+
+|                              SPACE SHOOTER - LEVELS MODULE                           |
+|                                Team: இனிழ் (Inizh)                                  |
+|                                                                                      |
+|  Game level classes containing difficulty modes (Easy, Medium).                      |
+|  Handles game loop, collision, UI, and game over logic.                              |
++--------------------------------------------------------------------------------------+
+"""
+
 import random
 from os.path import join
 import sys

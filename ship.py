@@ -1,3 +1,13 @@
+"""
++--------------------------------------------------------------------------------------+
+|                              SPACE SHOOTER - SHIP MODULE                             |
+|                                Team: இனிழ் (Inizh)                                  |
+|                                                                                      |
+|  Player ship classes with different ship types (base_ship, f14a).                    |
+|  Handles player movement, health, and ship rendering.                                |
++--------------------------------------------------------------------------------------+
+"""
+
 import pygame
 from settings import *
 from os.path import join

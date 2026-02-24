@@ -244,8 +244,8 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "fastapi", specifier = ">=0.133.0" },
-    { name = "numpy", specifier = ">=2.3.3" },
-    { name = "pygame-ce", specifier = ">=2.5.5" },
+    { name = "numpy" },
+    { name = "pygame-ce" },
     { name = "uvicorn", specifier = ">=0.41.0" },
     { name = "websockets", specifier = ">=16.0" },
 ]

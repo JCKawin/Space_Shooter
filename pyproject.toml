@@ -6,8 +6,8 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "fastapi>=0.133.0",
-    "numpy>=2.3.3",
-    "pygame-ce>=2.5.5",
+    "numpy",
+    "pygame-ce",
     "uvicorn>=0.41.0",
     "websockets>=16.0",
 ]

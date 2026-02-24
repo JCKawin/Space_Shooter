@@ -1,3 +1,13 @@
+"""
++--------------------------------------------------------------------------------------+
+|                              SPACE SHOOTER - MENU MODULE                             |
+|                                Team: இனிழ் (Inizh)                                  |
+|                                                                                      |
+|  Main menu screen with game mode selection.                                          |
+|  Handles user input for starting different game levels.                              |
++--------------------------------------------------------------------------------------+
+"""
+
 from os.path import join
 import pygame
 from settings import *

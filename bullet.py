@@ -1,3 +1,13 @@
+"""
++--------------------------------------------------------------------------------------+
+|                              SPACE SHOOTER - BULLET MODULE                           |
+|                                Team: இனிழ் (Inizh)                                  |
+|                                                                                      |
+|  Bullet sprite fired by the player's ship.                                           |
+|  Handles bullet movement and collision detection.                                    |
++--------------------------------------------------------------------------------------+
+"""
+
 from settings import *
 import pygame
 

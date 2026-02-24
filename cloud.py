@@ -1,3 +1,13 @@
+"""
++--------------------------------------------------------------------------------------+
+|                              SPACE SHOOTER - CLOUD MODULE                            |
+|                                Team: இனிழ் (Inizh)                                  |
+|                                                                                      |
+|  Cloud sprites for atmospheric effect and parallax scrolling.                        |
+|  Creates depth with under and over cloud layers.                                     |
++--------------------------------------------------------------------------------------+
+"""
+
 import pygame
 from settings import *
 

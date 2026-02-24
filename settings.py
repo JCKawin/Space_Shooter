@@ -1,3 +1,12 @@
+"""
++--------------------------------------------------------------------------------------+
+|                              SPACE SHOOTER - SETTINGS                                |
+|                                Team: இனிழ் (Inizh)                                  |
+|                                                                                      |
+|  Game configuration constants and global settings.                                   |
+|  Screen size, colors, speeds, and FPS settings.                                      |
++--------------------------------------------------------------------------------------+
+"""
 
 SCREEN_SIZE: tuple[int, int] = (1280, 720)
 BG_COLOR: str = "#00b5e2"

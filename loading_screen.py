@@ -1,3 +1,13 @@
+"""
++--------------------------------------------------------------------------------------+
+|                              SPACE SHOOTER - LOADING SCREEN                          |
+|                                Team: இனிழ் (Inizh)                                  |
+|                                                                                      |
+|  Loading screen with progress bar and team logo animation.                           |
+|  Displays while game assets are being loaded.                                        |
++--------------------------------------------------------------------------------------+
+"""
+
 import pygame
 from settings import *
 from  os.path import join
