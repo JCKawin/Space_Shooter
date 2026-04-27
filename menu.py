@@ -28,16 +28,12 @@ class menu:
             self.screen.blit(self.bg , (0,0))
             easy = self.font.render("Easy" , True , "white")
             medium = self.font.render("Hard" , True , "white")
-            multi = self.font.render("Multiplayer" , True , "white")
             easy_rect = easy.get_rect()
             medium_rect = medium.get_rect()
             easy_rect.topleft = (30 , 350)
             medium_rect.topright = (1250 , 350)
-            multi_rect = multi.get_rect()
-            multi_rect.center = (640 , 500)
             self.screen.blit(easy ,easy_rect)
             self.screen.blit(medium,medium_rect)
-            self.screen.blit(multi , multi_rect)
             pygame.draw.circle(self.screen , "white" , pygame.mouse.get_pos() , 5)
             pygame.display.flip()
 
@@ -50,5 +46,3 @@ class menu:
                 return "easy"
             elif medium_rect.collidepoint(pygame.mouse.get_pos()) and m_pressed[0]:
                 return "midi"
-            elif multi_rect.collidepoint(pygame.mouse.get_pos()) and m_pressed[0]:
-                return "multi"

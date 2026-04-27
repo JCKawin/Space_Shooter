@@ -25,7 +25,6 @@ import menu
 import pygame
 from settings import *
 import loading_screen
-import multiplayer_level as ml
 from os.path import join
 
 class main:
@@ -49,7 +48,6 @@ class main:
             "menu" : menu.menu(self),
             "easy" : levels.easy(self),
             "midi" : levels.medium(self),
-            "multi" : ml.multiplayer_medium(self , "Player 1")
         }
 
         
