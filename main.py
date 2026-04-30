@@ -20,12 +20,16 @@
 """
 
 import sys
-import levels
-import menu
-import pygame
-from settings import *
-import loading_screen
 from os.path import join
+
+import pygame
+
+import levels
+import loading_screen
+import menu
+import multiplayer
+from settings import *
+
 
 class main:
     def __init__(self) -> None:
@@ -34,7 +38,7 @@ class main:
         logo = pygame.image.load(IMG_LOGO)
         pygame.display.set_caption("Space Shooter")
         pygame.display.set_icon(logo)
-        self.clock = pygame.time.Clock() #Clock Variable
+        self.clock = pygame.time.Clock()  # Clock Variable
         self.running = True
         self.score = 0
         self.f_pkl = pygame.font.Font(None, 30)
@@ -43,28 +47,20 @@ class main:
         load = loading_screen.loader(self)
         load.run()
 
-
         self.level = {
-            "menu" : menu.menu(self),
-            "easy" : levels.easy(self),
-            "midi" : levels.medium(self),
+            "menu": menu.menu(self),
+            "easy": levels.easy(self),
+            "medi": levels.medium(self),
         }
 
-        
     def run(self):
         while True:
             dt = self.clock.tick(FPS) if FPS else self.clock.tick()
             for e in pygame.event.get():
                 if e.type == pygame.QUIT:
                     sys.exit()
-                
+
             self.state = self.level[self.state].run()
-
-
-
-    
-
-
 
 
 if __name__ == "__main__":
