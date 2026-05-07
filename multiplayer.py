@@ -1,3 +1,13 @@
+"""
++--------------------------------------------------------------------------------------+
+|                              SPACE SHOOTER - MULTIPLAYER MODULE                      |
+|                                Team: இனிழ் (Inizh)                                  |
+|                                                                                      |
+|  Game level classes containing Multiplayer.                                          |
+|  Handles game loop, collision, UI, and game over logic on the multiplayer level.     |
++--------------------------------------------------------------------------------------+
+"""
+
 import random
 import sys
 import time
@@ -8,67 +18,40 @@ import websockets
 
 import astroid
 import bullet
-import cloud
-import ship
-from settings import *
+import levels
+from settings import *  # noqa: F403
 
 
-class multiplayer:
+class multiplayer(levels.base):
     def __init__(self, main):
-        self.screen = main.screen
-        self.load_asserts()
-        self.clock = main.clock  # Clock Variable
-        self.rock = pygame.sprite.Group()  # Group for asteroids
-        self.bullet = pygame.sprite.Group()  # Group for bullets
-        self.missle = pygame.sprite.Group()  # Group for Missles
-        self.under_cloud = pygame.sprite.Group()  # clouds under the airplane
-        self.over_cloud = pygame.sprite.Group()  # clouds over the airplalne
-        self.f_pkl = pygame.font.Font(None, 30)
-        self.ship = ship.f14a(self)  # Player's ship
-        self.dt = main.dt
+        super().__init__(main)
+
+    async def run(self):
         self.internet = websockets.connect("ws://localhost:8080/" + self.name)
-        self.running = main.running
-        self.score = 0
-        self.health_bar_colour = "white"
-        self.start_colour = time.time()
-        self.time = time.time()
-        self.finish_time = time.time()
-        self.paused = False
-        self.missle_time = 0
-        self.blast_list = []
-        self.todel_blast = []
-
-    def load_asserts(self):
-        self.blast_anime = []
-        for i in range(1, 51):
-            self.blast_anime.append(
-                pygame.image.load(join(IMG_BLAST_DIR, f"blast ({i}).png"))
+        await self.internet
+        waiting = True
+        while waiting:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    return "menu"
+            self.screen.fill((0, 0, 0))
+            self.printf(
+                self.screen,
+                "Press any key to start",
+                (SCREEN_SIZE[0] // 2, SCREEN_SIZE[1] // 2),
+                "white",
+                self.f_uwl_big,
+                center=True,
             )
-        # Load images, fonts, and sounds
-        self.background = pygame.image.load(IMG_BACKGROUND)
-        self.f_uwl_big = pygame.font.Font(FONT_VT323, 360)
-        self.f_uwl = pygame.font.Font(FONT_VT323, 30)
-        self.bul_img = pygame.image.load(IMG_BULLET).convert_alpha()
-        self.rock_img = pygame.image.load(IMG_ASTROID_GREY).convert_alpha()
-        self.rock_img = pygame.transform.scale(self.rock_img, (64, 64))
-        self.miss_img = pygame.image.load(IMG_MISSILE).convert_alpha()
-        self.miss_img = pygame.transform.scale(self.miss_img, (32, 128))
-        self.under_cloud_img = pygame.image.load(IMG_CLOUD_UNDER).convert_alpha()
-        self.over_cloud_img = pygame.image.load(IMG_CLOUD_OVER).convert_alpha()
-        self.bgm = pygame.mixer.music.load(AUDIO_BGM)
-        pygame.mixer.music.set_volume(0.5)
-        self.shoot_eff = pygame.mixer.Sound(AUDIO_SHOOT)
-        self.rock_exp_eff = pygame.mixer.Sound(AUDIO_EXPLOSION)
-        self.rock_impact = pygame.mixer.Sound(AUDIO_IMPACT)
-        self.ship_heal_eff = pygame.mixer.Sound(AUDIO_HEAL)
+            pygame.display.flip()
 
-    def run(self):
         # Main game loop
         put_astroid = pygame.event.custom_type()
         pygame.time.set_timer(put_astroid, 500)
         pygame.mixer.music.play(loops=-1)
         self.time = time.time()
-        cloud.cloud(self.under_cloud, self.under_cloud_img)
         while self.running:
             rock_point = random.randint(0, SCREEN_SIZE[0]), random.randint(0, 20)
             missle_point = random.randint(0, SCREEN_SIZE[0]), random.randint(0, 40)
@@ -92,28 +75,11 @@ class multiplayer:
                     if event.key == pygame.K_ESCAPE:
                         self.paused = not self.paused
                         pygame.mixer.music.pause() if self.paused else pygame.mixer.music.unpause()
-            if not bool(len(self.under_cloud)):
-                cloud.cloud(self.under_cloud, self.under_cloud_img)
-            if not bool(len(self.over_cloud)):
-                cloud.cloud(self.over_cloud, self.over_cloud_img)
-            self.screen.fill(BG_COLOR)
-            self.under_cloud.draw(self.screen)
-            self.screen.blit(self.ship.image, self.ship.rect)
-            self.over_cloud.draw(self.screen)
-            self.rock.draw(self.screen)
-            self.bullet.draw(self.screen)
-            self.missle.draw(self.screen)
-            self._blast_draw()
-            self._UI()
+
+            self._draw()
             self.dt = self.clock.tick()
             if not self.paused:
-                self.under_cloud.update(0.1, self.dt)
-                self.over_cloud.update(0.15, self.dt)
-                self.rock.update(self.dt)
-                self.ship.update(self.dt)
-                self.bullet.update(self.dt)
-                self.missle.update(self.dt)
-                self._damage()
+                self._update()
             else:
                 self.printf(self.screen, "PAUSED", (0, 0), "red", self.f_uwl_big, True)
             pygame.display.flip()
@@ -123,6 +89,20 @@ class multiplayer:
             self.gameover()
             self._reset()
         return "menu"
+
+    def _update(self):
+        self.rock.update(self.dt)
+        self.ship.update(self.dt)
+        self.bullet.update(self.dt)
+        self._damage()
+
+    def _draw(self):
+        self.screen.fill(BG_COLOR)
+        self.screen.blit(self.ship.image, self.ship.rect)
+        self.rock.draw(self.screen)
+        self.bullet.draw(self.screen)
+        self._blast_draw()
+        self._UI()
 
     def _damage(self):
         # Handle collisions and update health/score
@@ -135,12 +115,6 @@ class multiplayer:
         if pygame.sprite.groupcollide(self.bullet, self.rock, True, True):
             self.score += 1
             pygame.mixer.Sound.play(self.rock_exp_eff)
-
-        if pygame.sprite.spritecollide(self.ship, self.missle, True):
-            pygame.mixer.Sound.play(self.rock_impact)
-            self.ship.Hp -= 100
-            self.health_bar_colour = "black"
-            self.start_colour = time.time()
 
         if self.ship.Hp <= 0:
             self.running = False

@@ -23,6 +23,8 @@ class menu:
         self.font = pygame.font.Font(FONT_UNWAVE, 80)
         self.bg = pygame.image.load(IMG_MENU_BG)
         self.bg = pygame.transform.scale(self.bg, (1280, 720))
+        self.done = False
+        self.next_state = None
 
     def run(self):
         while True:
@@ -30,12 +32,12 @@ class menu:
             self.screen.fill("#000000")
             # self.screen.blit(self.bg, (0, 0))
             self.m_pressed = pygame.mouse.get_pressed()
-            next_mode = self.modes("Easy", (30, 190))
-            next_mode = self.modes("Medium", (30, 300))
-            next_mode = self.modes("Multiplayer", (30, 500))
-            if next_mode:
-                return next_mode
+            self.modes("Easy", (30, 190))
+            self.modes("Medium", (30, 300))
+            self.modes("Multiplayer", (30, 500))
             self.text_box("Name: ", (30, 600))
+            if self.done:
+                return
             pygame.draw.circle(self.screen, "white", pygame.mouse.get_pos(), 5)
             pygame.display.flip()
             for e in pygame.event.get():
@@ -48,7 +50,9 @@ class menu:
         easy_rect.topleft = pos
         self.screen.blit(easy, easy_rect)
         if easy_rect.collidepoint(pygame.mouse.get_pos()) and self.m_pressed[0]:
-            return f"{return_state.lower()[:4]}"
+            print(return_state)
+            self.next_state = return_state.lower()
+            self.done = True
 
     def text_box(self, text, pos):
         isactive = False

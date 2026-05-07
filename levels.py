@@ -39,6 +39,7 @@ class base:
         self.paused = False
         self.done = False
         self.next_state = None
+        self.time = time.time()
 
     def load_asserts(self):
         self.background = pygame.image.load(IMG_BACKGROUND)
@@ -85,7 +86,7 @@ class base:
             self.screen,
             f"Score : {self.score}",
             (SCREEN_SIZE[0] - 120, 20),
-            "black",
+            "white",
             self.f_pkl,
         )
         if self.running:
@@ -93,7 +94,7 @@ class base:
                 self.screen,
                 f"played : {time.time() - self.time: .2f} sec",
                 (SCREEN_SIZE[0] - 200, SCREEN_SIZE[1] - 30),
-                "black",
+                "white",
                 self.f_pkl,
             )
 

@@ -55,12 +55,12 @@ class main:
 
     def run(self):
         while True:
-            dt = self.clock.tick(FPS) if FPS else self.clock.tick()
+            if self.level[self.state].done:
+                self.state = self.level[self.state].next_state
             for e in pygame.event.get():
                 if e.type == pygame.QUIT:
                     sys.exit()
-
-            self.state = self.level[self.state].run()
+            self.level[self.state].run()
 
 
 if __name__ == "__main__":
