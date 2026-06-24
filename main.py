@@ -50,13 +50,15 @@ class main:
         self.level = {
             "menu": menu.menu(self),
             "easy": levels.easy(self),
-            "medi": levels.medium(self),
+            "medium": levels.medium(self),
         }
 
     def run(self):
         while True:
-            if self.level[self.state].done:
-                self.state = self.level[self.state].next_state
+            current = self.level[self.state]
+            if current.done:
+                current.done = False
+                self.state = current.next_state
             for e in pygame.event.get():
                 if e.type == pygame.QUIT:
                     sys.exit()
