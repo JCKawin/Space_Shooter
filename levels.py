@@ -30,7 +30,7 @@ class LevelConfig:
     extended_assets: bool = False
     spawn_missiles: bool = False
     use_clouds: bool = False
-
+    backgrond_image: bool = True
 
 class LevelAssets:
     def __init__(self, extended: bool = False):
@@ -286,10 +286,12 @@ class GameLevel:
         finish_time = time.time() - self.time
         waiting = True
         while waiting:
-            self.screen.fill(BG_COLOR)
-            self.screen.blit(self.assets.background, (0, 0))
-            self.screen.blit(self.ship.image, self.ship.rect)
-            self.rock.draw(self.screen)
+            # self.screen.fill(BG_COLOR)
+            # self.screen.blit(self.assets.background, (0, 0))
+            # self.screen.blit(self.ship.image, self.ship.rect)
+            # self.rock.draw(self.screen)
+
+            self.draw_scene(self)
             self.hud.printf(
                 self.screen, "GAME OVER", (0, 0), "white", self.assets.f_uwl_big, True
             )
@@ -371,6 +373,7 @@ class GameLevel:
 EASY_CONFIG = LevelConfig(ship_factory=ship.base_ship)
 MEDIUM_CONFIG = LevelConfig(
     ship_factory=ship.f14a,
+    backgrond_image= False,
     extended_assets=True,
     spawn_missiles=True,
     use_clouds=True,
